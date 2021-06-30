@@ -19,20 +19,15 @@ int main() {
 /* Copy s1 to s2, 
  expanding expressions such a-z to abc..xyz */
 void expand(char s1[], char s2[]) {
-    int i, j, from, to;
+    int i, j;
     i = j = 0;
     while(s1[i] != '\0') {
         if (s1[i] == '-' && i > 0) { //Check if any range expression in str
-            if ((s1[i-1] < s1[i+1])) {
-                from = s1[i-1];
-                to = s1[i+1];
-                
-                if ((from >= CHAR_LOW && to <= CHAR_HIGH)
-                    || (from >= CHAR_C_LOW && to >= CHAR_C_HIGH)
-                    || (from >= DIG_LOW && to >= DIG_HIGH)) {
-                    for (int fr = s1[i-1]; fr <= s1[i+1]; fr++, j++) {
-                        s2[j] = fr;
-                    }
+            if ((s1[i-1] >= CHAR_LOW && s1[i+1] <= CHAR_HIGH)
+                || (s1[i-1] >= CHAR_C_LOW && s1[i+1] >= CHAR_C_HIGH)
+                || (s1[i-1] >= DIG_LOW && s1[i+1] >= DIG_HIGH)) {
+                for (int fr = s1[i-1]; fr <= s1[i+1]; fr++, j++) {
+                    s2[j] = fr;
                 }
             }
         } else { // Chars without expand
